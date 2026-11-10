@@ -1,0 +1,61 @@
+# Context Intelligence — local development stack (Phase 0)
+# Brings up the data plane: Postgres+pgvector, Redis, MinIO.
+# The gateway can run in-container or on the host against these services.
+#
+# Usage:
+#   cp .env.example .env
+#   docker compose up -d
+#   docker compose ps
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: ci-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-ci}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ci_dev_password_change_me}
+      POSTGRES_DB: ${POSTGRES_DB:-context_intelligence}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Migrations are applied in lexical order on first boot of an empty volume.
+      - ./db/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ci} -d ${POSTGRES_DB:-context_intelligence}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: ci-redis
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  minio:
+    image: minio/minio:latest
+    container_name: ci-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-ci_minio}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-ci_minio_dev_password_change_me}
+    ports:
+      - "9000:9000"   # S3 API
+      - "9001:9001"   # Console
+    volumes:
+      - miniodata:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:
+  miniodata:

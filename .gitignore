@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Data / local stores
+data/
+*.sqlite
+*.db
+
+# Node / UI (added in Phase 2)
+node_modules/
+.next/
+
+# OS
+.DS_Store
+
+# Office temp/lock files
+~$*
+*.tmp
