@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "autoMode": {
+    "soft_deny": [
+      "$defaults",
+      "Bash(rm:*) fixtures or local Postgres/MinIO data volumes under this repo — Irreversible Local Destruction risk"
+    ],
+    "environment": [
+      "$defaults",
+      "### Org-wide",
+      "**Organization**: Applied Computing (GitHub org: Ryan-Applied)",
+      "**Cloud provider(s)**: None configured",
+      "**Repository visibility**: Public (Ryan-Applied/MetisIntelligence, confirmed via gh) — treat any push here as publishing; only this repo's own work belongs here",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: None configured — .env used for local secrets (POSTGRES_*, MINIO_ROOT_*); never commit a real .env per .env.example header",
+      "**Default / protected branches**: Default branch main; no rulesets listed; protected branches not queryable here — protection status cannot be confirmed either way",
+      "**CI/CD deploy targets**: None configured",
+      "**Network posture**: None configured",
+      "**Host containment**: None configured — assume Claude Code runs on an ordinary developer machine or CI runner with open internet",
+      "**Source control**: Ryan-Applied/MetisIntelligence (https://github.com/Ryan-Applied/MetisIntelligence.git) and its remote(s) only — no additional orgs configured",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: None configured",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: .env and .env.example (POSTGRES_USER/POSTGRES_PASSWORD, MINIO_ROOT_USER/MINIO_ROOT_PASSWORD, GATEWAY config) — share only with audiences cleared at the [named+specifics] bar",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries prod or production as a whole word or name segment",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries prod or production as a whole word or name segment",
+      "### User-specific",
+      "**Primary use of Claude Code**: software development (Context Intelligence — continuous-learning/agent-memory platform; CI Core vs CI-Metis edition isolation is a hard boundary, never serve both from one process)",
+      "**Trusted repo**: /Users/d8rh8r/Documents/Applied Computing/ContextIntelligence (Ryan-Applied/MetisIntelligence, public) and its origin remote — only this repo's own work belongs here; secrets and sensitive data are never cleared into it by visibility alone",
+      "**Org-specific CLIs**: None configured"
+    ]
+  }
+}
